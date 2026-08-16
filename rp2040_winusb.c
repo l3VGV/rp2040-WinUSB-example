@@ -12,18 +12,20 @@ bool transmit = false;
 
 void tud_vendor_rx_cb(uint8_t itf)
 {
-    tud_vendor_read(buf, tud_vendor_available());
+    tud_vendor_read(buf, tud_vendor_available());//clean input buffer
 
     // transmit = !transmit;
    //  if(!transmit) return;
 
-    tud_vendor_write(buf, CFG_TUD_VENDOR_TX_BUFSIZE);
+    tud_vendor_write(buf, CFG_TUD_VENDOR_TX_BUFSIZE);//start transmiting back
      tud_vendor_flush();
 }
 
 
 void tud_vendor_tx_cb(uint8_t itf, uint32_t sent_bytes)
 {
+    //fill bufer each time ther is some space
+    
     //if(!transmit) return;
     uint32_t canSend = MIN(tud_vendor_write_available(), 1024);
 
